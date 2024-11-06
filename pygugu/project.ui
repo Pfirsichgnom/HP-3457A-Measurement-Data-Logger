@@ -1,0 +1,367 @@
+<?xml version='1.0' encoding='utf-8'?>
+<interface version="1.4" author="PygubuDesigner 0.39.3">
+  <project>
+    <settings>
+      <setting id="name">measurementpy</setting>
+      <setting id="description">hui for gpib measurements</setting>
+      <setting id="module_name">python3</setting>
+      <setting id="template">application</setting>
+      <setting id="main_widget">tk1</setting>
+      <setting id="main_classname">gui</setting>
+      <setting id="main_menu" />
+      <setting id="output_dir" />
+      <setting id="output_dir2" />
+      <setting id="import_tkvariables">False</setting>
+      <setting id="use_ttk_styledefinition_file">False</setting>
+      <setting id="use_i18n">False</setting>
+      <setting id="all_ids_attributes">False</setting>
+      <setting id="generate_code_onsave">False</setting>
+      <setting id="use_window_centering_code">False</setting>
+      <setting id="ttk_style_definition_file" />
+    </settings>
+    <customwidgets />
+  </project>
+  <object class="tk.Tk" id="tk1">
+    <property name="height">400</property>
+    <property name="width">800</property>
+    <child>
+      <object class="ttk.Notebook" id="notebook1">
+        <property name="height">400</property>
+        <property name="width">800</property>
+        <layout manager="pack">
+          <property name="side">top</property>
+        </layout>
+        <child>
+          <object class="ttk.Notebook.Tab" id="tab1">
+            <property name="text" translatable="yes">main</property>
+            <child>
+              <object class="ttk.Frame" id="frame6">
+                <property name="height">100</property>
+                <property name="width">800</property>
+                <layout manager="pack">
+                  <property name="anchor">nw</property>
+                  <property name="side">bottom</property>
+                </layout>
+                <child>
+                  <object class="ttk.Frame" id="frame7">
+                    <property name="height">200</property>
+                    <property name="width">200</property>
+                    <layout manager="pack">
+                      <property name="side">top</property>
+                    </layout>
+                    <child>
+                      <object class="ttk.Frame" id="frame2">
+                        <property name="height">300</property>
+                        <property name="width">600</property>
+                        <layout manager="pack">
+                          <property name="side">left</property>
+                        </layout>
+                        <child>
+                          <object class="tk.Text" id="text1">
+                            <property name="blockcursor">false</property>
+                            <property name="cursor">arrow</property>
+                            <property name="exportselection">true</property>
+                            <property name="height">20</property>
+                            <property name="setgrid">false</property>
+                            <property name="width">60</property>
+                            <layout manager="pack">
+                              <property name="side">top</property>
+                            </layout>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Frame" id="frame18">
+                    <property name="height">200</property>
+                    <property name="width">200</property>
+                    <layout manager="pack">
+                      <property name="side">top</property>
+                    </layout>
+                    <child>
+                      <object class="ttk.Checkbutton" id="fW_checkbox" named="True">
+                        <property name="text" translatable="yes">4Wire</property>
+                        <layout manager="pack">
+                          <property name="ipadx">2</property>
+                          <property name="ipady">2</property>
+                          <property name="padx">2</property>
+                          <property name="pady">2</property>
+                          <property name="side">right</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Checkbutton" id="ac_checkbox" named="True">
+                        <property name="text" translatable="yes">AC</property>
+                        <layout manager="pack">
+                          <property name="ipadx">2</property>
+                          <property name="ipady">2</property>
+                          <property name="padx">2</property>
+                          <property name="pady">2</property>
+                          <property name="side">right</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Checkbutton" id="histogram_checkbox" named="True">
+                        <property name="text" translatable="yes">Histogram</property>
+                        <layout manager="pack">
+                          <property name="ipadx">2</property>
+                          <property name="ipady">2</property>
+                          <property name="padx">2</property>
+                          <property name="pady">2</property>
+                          <property name="side">right</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Button" id="voltage_button" named="True">
+                        <property name="text" translatable="yes">Voltage</property>
+                        <layout manager="pack">
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Button" id="current_button" named="True">
+                        <property name="text" translatable="yes">Current</property>
+                        <layout manager="pack">
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Button" id="resistance_button" named="True">
+                        <property name="text" translatable="yes">Resistance</property>
+                        <layout manager="pack">
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Button" id="frequency_button" named="True">
+                        <property name="text" translatable="yes">Frequency</property>
+                        <layout manager="pack">
+                          <property name="ipadx">0</property>
+                          <property name="ipady">0</property>
+                          <property name="padx">0</property>
+                          <property name="pady">0</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Separator" id="separator2">
+                        <property name="orient">horizontal</property>
+                        <layout manager="pack">
+                          <property name="padx">5</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Notebook.Tab" id="tab2">
+            <property name="text" translatable="yes">Settings</property>
+            <child>
+              <object class="ttk.Frame" id="frame19">
+                <property name="height">200</property>
+                <property name="width">200</property>
+                <layout manager="pack">
+                  <property name="side">top</property>
+                </layout>
+                <child>
+                  <object class="ttk.Frame" id="frame20">
+                    <property name="height">200</property>
+                    <property name="width">200</property>
+                    <layout manager="pack">
+                      <property name="side">left</property>
+                    </layout>
+                    <child>
+                      <object class="ttk.Frame" id="frame10">
+                        <property name="height">20</property>
+                        <property name="width">200</property>
+                        <layout manager="pack">
+                          <property name="side">top</property>
+                        </layout>
+                        <child>
+                          <object class="ttk.Entry" id="entry3">
+                            <layout manager="pack">
+                              <property name="side">left</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Button" id="NRDGS_button" named="True">
+                            <property name="text" translatable="yes">NRDGS</property>
+                            <layout manager="pack">
+                              <property name="side">right</property>
+                            </layout>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Frame" id="frame13">
+                        <property name="height">20</property>
+                        <property name="width">200</property>
+                        <layout manager="pack">
+                          <property name="side">top</property>
+                        </layout>
+                        <child>
+                          <object class="ttk.Entry" id="entry5">
+                            <layout manager="pack">
+                              <property name="side">left</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Button" id="digits_button" named="True">
+                            <property name="text" translatable="yes">Digits</property>
+                            <layout manager="pack">
+                              <property name="side">right</property>
+                            </layout>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Frame" id="frame14">
+                        <property name="height">20</property>
+                        <property name="width">200</property>
+                        <layout manager="pack">
+                          <property name="side">top</property>
+                        </layout>
+                        <child>
+                          <object class="ttk.Entry" id="entry6">
+                            <layout manager="pack">
+                              <property name="side">left</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Button" id="nplc_button" named="True">
+                            <property name="text" translatable="yes">NPLC</property>
+                            <layout manager="pack">
+                              <property name="side">right</property>
+                            </layout>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Frame" id="frame15">
+                        <property name="height">20</property>
+                        <property name="width">200</property>
+                        <layout manager="pack">
+                          <property name="anchor">center</property>
+                          <property name="side">bottom</property>
+                        </layout>
+                        <child>
+                          <object class="ttk.Button" id="save_button" named="True">
+                            <property name="text" translatable="yes">Save As</property>
+                            <layout manager="pack">
+                              <property name="side">bottom</property>
+                            </layout>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Frame" id="frame23">
+                        <property name="height">200</property>
+                        <property name="width">200</property>
+                        <layout manager="pack">
+                          <property name="side">top</property>
+                        </layout>
+                        <child>
+                          <object class="ttk.Entry" id="entry7">
+                            <layout manager="pack">
+                              <property name="side">left</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Button" id="button22" named="True">
+                            <property name="text" translatable="yes">NRDGS</property>
+                            <layout manager="pack">
+                              <property name="side">right</property>
+                            </layout>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Frame" id="frame24">
+                        <property name="height">200</property>
+                        <property name="width">200</property>
+                        <layout manager="pack">
+                          <property name="side">top</property>
+                        </layout>
+                        <child>
+                          <object class="ttk.Entry" id="entry9">
+                            <layout manager="pack">
+                              <property name="side">left</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Button" id="button24" named="True">
+                            <property name="text" translatable="yes">NPLC</property>
+                            <layout manager="pack">
+                              <property name="side">right</property>
+                            </layout>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Frame" id="frame25">
+                        <property name="height">200</property>
+                        <property name="width">200</property>
+                        <layout manager="pack">
+                          <property name="side">top</property>
+                        </layout>
+                        <child>
+                          <object class="ttk.Entry" id="entry8">
+                            <layout manager="pack">
+                              <property name="side">left</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Button" id="button23" named="True">
+                            <property name="text" translatable="yes">Digits</property>
+                            <layout manager="pack">
+                              <property name="side">right</property>
+                            </layout>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Frame" id="frame22">
+                    <property name="height">200</property>
+                    <property name="width">200</property>
+                    <layout manager="pack">
+                      <property name="side">right</property>
+                    </layout>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
