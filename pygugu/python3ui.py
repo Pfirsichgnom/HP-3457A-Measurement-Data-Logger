@@ -20,6 +20,18 @@ class guiUI:
     def run(self):
         self.mainwindow.mainloop()
 
+    def fw_checked(self, widget_id):
+        pass
+
+    def callback(self, event=None):
+        pass
+
+    def ac_checked(self, widget_id):
+        print(self.builder.objects['ac_checkbox'])
+
+    def hist_checked(self, widget_id):
+        pass
+
 
 if __name__ == "__main__":
     app = guiUI()
