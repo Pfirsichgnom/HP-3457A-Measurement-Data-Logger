@@ -277,7 +277,9 @@
                         </layout>
                         <child>
                           <object class="ttk.Button" id="save_button" named="True">
+                            <property name="state">disabled</property>
                             <property name="text" translatable="yes">Save As</property>
+                            <property name="textvariable">string:pressed</property>
                             <layout manager="pack">
                               <property name="side">bottom</property>
                             </layout>
