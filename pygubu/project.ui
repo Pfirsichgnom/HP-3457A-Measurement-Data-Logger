@@ -50,13 +50,7 @@
                       <property name="side">top</property>
                     </layout>
                     <child>
-                      <object class="tk.Text" id="text1">
-                        <property name="blockcursor">false</property>
-                        <property name="cursor">arrow</property>
-                        <property name="exportselection">true</property>
-                        <property name="height">18</property>
-                        <property name="setgrid">false</property>
-                        <property name="width">75</property>
+                      <object class="tk.Canvas" id="canvas1">
                         <layout manager="pack">
                           <property name="side">top</property>
                         </layout>
@@ -72,28 +66,12 @@
                       <property name="side">top</property>
                     </layout>
                     <child>
-                      <object class="ttk.Checkbutton" id="fW_checkbox" named="True">
-                        <property name="command" type="command" cbtype="with_wid">fw_checked</property>
-                        <property name="offvalue">0</property>
-                        <property name="onvalue">1</property>
-                        <property name="text" translatable="yes">4Wire</property>
-                        <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
-                        <layout manager="pack">
-                          <property name="ipadx">2</property>
-                          <property name="ipady">2</property>
-                          <property name="padx">2</property>
-                          <property name="pady">2</property>
-                          <property name="side">right</property>
-                        </layout>
-                      </object>
-                    </child>
-                    <child>
                       <object class="ttk.Checkbutton" id="ac_checkbox" named="True">
-                        <property name="command" type="command" cbtype="with_wid">ac_checked</property>
+                        <property name="command" type="command" cbtype="simple">ac_checked</property>
                         <property name="offvalue">0</property>
                         <property name="onvalue">1</property>
                         <property name="text" translatable="yes">AC</property>
-                        <property name="variable">int:value</property>
+                        <property name="variable">int:ac_var</property>
                         <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
                         <layout manager="pack">
                           <property name="ipadx">2</property>
@@ -106,10 +84,11 @@
                     </child>
                     <child>
                       <object class="ttk.Checkbutton" id="histogram_checkbox" named="True">
-                        <property name="command" type="command" cbtype="with_wid">hist_checked</property>
+                        <property name="command" type="command" cbtype="simple">histogram_checked</property>
                         <property name="offvalue">0</property>
                         <property name="onvalue">1</property>
                         <property name="text" translatable="yes">Histogram</property>
+                        <property name="variable">int:hm_var</property>
                         <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
                         <layout manager="pack">
                           <property name="ipadx">2</property>
@@ -122,6 +101,7 @@
                     </child>
                     <child>
                       <object class="ttk.Button" id="voltage_button" named="True">
+                        <property name="command" type="command" cbtype="simple">voltage_pressed</property>
                         <property name="text" translatable="yes">Voltage</property>
                         <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
                         <layout manager="pack">
@@ -131,6 +111,7 @@
                     </child>
                     <child>
                       <object class="ttk.Button" id="current_button" named="True">
+                        <property name="command" type="command" cbtype="simple">current_pressed</property>
                         <property name="text" translatable="yes">Current</property>
                         <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
                         <layout manager="pack">
@@ -140,6 +121,7 @@
                     </child>
                     <child>
                       <object class="ttk.Button" id="resistance_button" named="True">
+                        <property name="command" type="command" cbtype="simple">resistance_pressed</property>
                         <property name="text" translatable="yes">Resistance</property>
                         <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
                         <layout manager="pack">
@@ -149,6 +131,7 @@
                     </child>
                     <child>
                       <object class="ttk.Button" id="frequency_button" named="True">
+                        <property name="command" type="command" cbtype="simple">frequency_pressed</property>
                         <property name="text" translatable="yes">Frequency</property>
                         <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
                         <layout manager="pack">
@@ -156,6 +139,36 @@
                           <property name="ipady">0</property>
                           <property name="padx">0</property>
                           <property name="pady">0</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Button" id="button5" named="True">
+                        <property name="command" type="command" cbtype="simple">acdci_pressed</property>
+                        <property name="text" translatable="yes">ACDCI</property>
+                        <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
+                        <layout manager="pack">
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Button" id="button9" named="True">
+                        <property name="command" type="command" cbtype="simple">acdcv_pressed</property>
+                        <property name="text" translatable="yes">ACDCV</property>
+                        <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
+                        <layout manager="pack">
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Button" id="button12" named="True">
+                        <property name="command" type="command" cbtype="simple">resistancefw_pressed</property>
+                        <property name="text" translatable="yes">Resistance 4W</property>
+                        <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
+                        <layout manager="pack">
                           <property name="side">left</property>
                         </layout>
                       </object>
@@ -208,8 +221,9 @@
                         </child>
                         <child>
                           <object class="ttk.Button" id="NRDGS_button" named="True">
+                            <property name="command" type="command" cbtype="simple">nrdgs_pressed</property>
                             <property name="text" translatable="yes">NRDGS</property>
-                            <bind sequence="&lt;1&gt;" handler="callback" add="" />
+                            <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
                             <layout manager="pack">
                               <property name="side">right</property>
                             </layout>
@@ -233,8 +247,9 @@
                         </child>
                         <child>
                           <object class="ttk.Button" id="digits_button" named="True">
+                            <property name="command" type="command" cbtype="simple">digits_pressed</property>
                             <property name="text" translatable="yes">Digits</property>
-                            <bind sequence="&lt;1&gt;" handler="callback" add="" />
+                            <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
                             <layout manager="pack">
                               <property name="side">right</property>
                             </layout>
@@ -258,8 +273,9 @@
                         </child>
                         <child>
                           <object class="ttk.Button" id="nplc_button" named="True">
+                            <property name="command" type="command" cbtype="simple">nplc_pressed</property>
                             <property name="text" translatable="yes">NPLC</property>
-                            <bind sequence="&lt;1&gt;" handler="callback" add="" />
+                            <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
                             <layout manager="pack">
                               <property name="side">right</property>
                             </layout>
@@ -275,16 +291,6 @@
                           <property name="anchor">center</property>
                           <property name="side">bottom</property>
                         </layout>
-                        <child>
-                          <object class="ttk.Button" id="save_button" named="True">
-                            <property name="state">disabled</property>
-                            <property name="text" translatable="yes">Save As</property>
-                            <property name="textvariable">string:pressed</property>
-                            <layout manager="pack">
-                              <property name="side">bottom</property>
-                            </layout>
-                          </object>
-                        </child>
                       </object>
                     </child>
                     <child>
@@ -303,8 +309,9 @@
                         </child>
                         <child>
                           <object class="ttk.Button" id="button22" named="True">
+                            <property name="command" type="command" cbtype="simple">nrdgs_pressed</property>
                             <property name="text" translatable="yes">NRDGS</property>
-                            <bind sequence="&lt;1&gt;" handler="callback" add="" />
+                            <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
                             <layout manager="pack">
                               <property name="side">right</property>
                             </layout>
@@ -328,8 +335,9 @@
                         </child>
                         <child>
                           <object class="ttk.Button" id="button24" named="True">
-                            <property name="text" translatable="yes">NPLC</property>
-                            <bind sequence="&lt;1&gt;" handler="callback" add="" />
+                            <property name="command" type="command" cbtype="simple">acband_pressed</property>
+                            <property name="text" translatable="yes">ACBAND</property>
+                            <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
                             <layout manager="pack">
                               <property name="side">right</property>
                             </layout>
@@ -353,8 +361,9 @@
                         </child>
                         <child>
                           <object class="ttk.Button" id="button23" named="True">
+                            <property name="command" type="command" cbtype="simple">digits_pressed</property>
                             <property name="text" translatable="yes">Digits</property>
-                            <bind sequence="&lt;1&gt;" handler="callback" add="" />
+                            <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
                             <layout manager="pack">
                               <property name="side">right</property>
                             </layout>
@@ -373,8 +382,11 @@
                           <object class="ttk.Checkbutton" id="checkbutton1">
                             <property name="compound">top</property>
                             <property name="cursor">arrow</property>
+                            <property name="offvalue">0</property>
+                            <property name="onvalue">1</property>
                             <property name="text" translatable="yes">FixedZ</property>
-                            <bind sequence="&lt;1&gt;" handler="callback" add="" />
+                            <property name="variable">string:FZ_var</property>
+                            <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
                             <layout manager="pack">
                               <property name="ipadx">2</property>
                               <property name="side">left</property>
@@ -383,11 +395,15 @@
                         </child>
                         <child>
                           <object class="ttk.Checkbutton" id="checkbutton2">
+                            <property name="command" type="command" cbtype="simple">lock_pressed</property>
                             <property name="compound">top</property>
                             <property name="cursor">arrow</property>
+                            <property name="offvalue">0</property>
+                            <property name="onvalue">1</property>
                             <property name="state">normal</property>
                             <property name="text" translatable="yes">Lock</property>
-                            <bind sequence="&lt;1&gt;" handler="callback" add="" />
+                            <property name="variable">string:lk_var</property>
+                            <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
                             <layout manager="pack">
                               <property name="ipadx">2</property>
                               <property name="side">left</property>
@@ -396,11 +412,15 @@
                         </child>
                         <child>
                           <object class="ttk.Checkbutton" id="checkbutton3">
+                            <property name="command" type="command" cbtype="simple">trigger_pressed</property>
                             <property name="compound">top</property>
                             <property name="cursor">arrow</property>
+                            <property name="offvalue">0</property>
+                            <property name="onvalue">1</property>
                             <property name="state">normal</property>
                             <property name="text" translatable="yes">Trigger</property>
-                            <bind sequence="&lt;1&gt;" handler="callback" add="" />
+                            <property name="variable">string:tr_var</property>
+                            <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
                             <layout manager="pack">
                               <property name="ipadx">2</property>
                               <property name="side">left</property>
@@ -418,6 +438,36 @@
                     <layout manager="pack">
                       <property name="side">right</property>
                     </layout>
+                    <child>
+                      <object class="ttk.Frame" id="frame9">
+                        <property name="height">200</property>
+                        <property name="width">200</property>
+                        <layout manager="pack">
+                          <property name="side">top</property>
+                        </layout>
+                        <child>
+                          <object class="ttk.Label" id="label1">
+                            <property name="compound">top</property>
+                            <property name="cursor">arrow</property>
+                            <property name="justify">left</property>
+                            <property name="text" translatable="yes">Interface</property>
+                            <layout manager="pack">
+                              <property name="side">top</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Combobox" id="combobox1">
+                            <property name="textvariable">string:de_var</property>
+                            <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
+                            <bind sequence="&lt;Visibility&gt;" handler="callback" add="True" />
+                            <layout manager="pack">
+                              <property name="side">top</property>
+                            </layout>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
                   </object>
                 </child>
               </object>
@@ -457,9 +507,10 @@
                         </child>
                         <child>
                           <object class="ttk.Button" id="button1" named="True">
+                            <property name="command" type="command" cbtype="simple">safve</property>
                             <property name="compound">top</property>
                             <property name="text" translatable="yes">Savepath</property>
-                            <bind sequence="&lt;1&gt;" handler="callback" add="" />
+                            <bind sequence="&lt;1&gt;" handler="callback" add="True" />
                             <layout manager="pack">
                               <property name="side">right</property>
                             </layout>
@@ -483,8 +534,9 @@
                         </child>
                         <child>
                           <object class="ttk.Button" id="button2" named="True">
+                            <property name="command" type="command" cbtype="simple">max_points_pressed</property>
                             <property name="text" translatable="yes">Max Points</property>
-                            <bind sequence="&lt;1&gt;" handler="callback" add="" />
+                            <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
                             <layout manager="pack">
                               <property name="side">right</property>
                             </layout>
@@ -508,10 +560,11 @@
                         </child>
                         <child>
                           <object class="ttk.Button" id="button3" named="True">
+                            <property name="command" type="command" cbtype="simple">sampless_pressed</property>
                             <property name="cursor">arrow</property>
                             <property name="default">normal</property>
                             <property name="text" translatable="yes">Samples/s</property>
-                            <bind sequence="&lt;1&gt;" handler="callback" add="" />
+                            <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
                             <layout manager="pack">
                               <property name="side">right</property>
                             </layout>
@@ -529,60 +582,11 @@
                         </layout>
                         <child>
                           <object class="ttk.Button" id="button4" named="True">
+                            <property name="command" type="command" cbtype="simple">saveas_pressed</property>
                             <property name="text" translatable="yes">Save As</property>
-                            <bind sequence="&lt;1&gt;" handler="callback" add="" />
+                            <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
                             <layout manager="pack">
                               <property name="side">bottom</property>
-                            </layout>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="ttk.Frame" id="frame11">
-                        <property name="height">200</property>
-                        <property name="width">200</property>
-                        <layout manager="pack">
-                          <property name="side">top</property>
-                        </layout>
-                        <child>
-                          <object class="ttk.Entry" id="entry11">
-                            <layout manager="pack">
-                              <property name="side">left</property>
-                            </layout>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="ttk.Button" id="button6" named="True">
-                            <property name="text" translatable="yes">NPLC</property>
-                            <bind sequence="&lt;1&gt;" handler="callback" add="" />
-                            <layout manager="pack">
-                              <property name="side">right</property>
-                            </layout>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="ttk.Frame" id="frame12">
-                        <property name="height">200</property>
-                        <property name="width">200</property>
-                        <layout manager="pack">
-                          <property name="side">top</property>
-                        </layout>
-                        <child>
-                          <object class="ttk.Entry" id="entry12">
-                            <layout manager="pack">
-                              <property name="side">left</property>
-                            </layout>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="ttk.Button" id="button7" named="True">
-                            <property name="text" translatable="yes">Digits</property>
-                            <bind sequence="&lt;1&gt;" handler="callback" add="" />
-                            <layout manager="pack">
-                              <property name="side">right</property>
                             </layout>
                           </object>
                         </child>
@@ -618,8 +622,9 @@
         </layout>
         <child>
           <object class="ttk.Button" id="button11">
+            <property name="command" type="command" cbtype="simple">up_pressed</property>
             <property name="text" translatable="yes">up</property>
-            <bind sequence="&lt;1&gt;" handler="callback" add="True" />
+            <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
             <layout manager="pack">
               <property name="side">left</property>
             </layout>
@@ -627,8 +632,9 @@
         </child>
         <child>
           <object class="ttk.Button" id="button10">
+            <property name="command" type="command" cbtype="simple">down__pressed</property>
             <property name="text" translatable="yes">down</property>
-            <bind sequence="&lt;1&gt;" handler="callback" add="True" />
+            <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
             <layout manager="pack">
               <property name="side">right</property>
             </layout>
@@ -646,7 +652,7 @@
         <child>
           <object class="ttk.Treeview" id="treeview1">
             <property name="selectmode">extended</property>
-            <bind sequence="&lt;1&gt;" handler="callback" add="" />
+            <bind sequence="&lt;&lt;TreeviewSelect&gt;&gt;" handler="callback" add="True" />
             <layout manager="pack">
               <property name="side">bottom</property>
             </layout>
