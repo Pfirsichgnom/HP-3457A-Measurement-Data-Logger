@@ -117,7 +117,6 @@ class gpib:
     def ERR(self):
         if self.instr:
             error = self.instr.query_str("ERR?")
-
             if error > 0:
                 errors = []
                 if error & 0x001:

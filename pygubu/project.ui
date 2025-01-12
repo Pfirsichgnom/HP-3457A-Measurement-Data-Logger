@@ -45,14 +45,17 @@
                 <child>
                   <object class="ttk.Frame" id="frame7">
                     <property name="height">200</property>
-                    <property name="width">800</property>
+                    <property name="width">200</property>
                     <layout manager="pack">
                       <property name="side">top</property>
                     </layout>
                     <child>
                       <object class="tk.Canvas" id="canvas1">
-                        <layout manager="pack">
-                          <property name="side">top</property>
+			<property name="height">200</property>
+                        <property name="width">200</property>
+                        <layout manager="pack">			 
+                          <property name="side">top</property>			 
+			  <property name="expand">false</property>
                         </layout>
                       </object>
                     </child>
