@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<interface version="1.4" author="PygubuDesigner 0.39.3">
+<interface version="1.5" author="PygubuDesigner 0.41.4">
   <project>
     <settings>
       <setting id="name">measurementpy</setting>
@@ -20,167 +20,673 @@
       <setting id="ttk_style_definition_file" />
     </settings>
     <customwidgets />
+    <resources />
   </project>
   <object class="tk.Tk" id="tk1">
-    <property name="height">400</property>
-    <property name="width">800</property>
+    <property name="height">600</property>
+    <property name="width">1200</property>
     <child>
       <object class="ttk.Notebook" id="notebook1">
-        <property name="height">400</property>
-        <property name="width">800</property>
+        <property name="height">600</property>
+        <property name="width">1200</property>
         <layout manager="pack">
+          <property name="expand">true</property>
+          <property name="fill">both</property>
           <property name="side">top</property>
         </layout>
         <child>
           <object class="ttk.Notebook.Tab" id="tab1">
-            <property name="text" translatable="yes">main</property>
+            <property name="text" translatable="yes">Main</property>
             <child>
-              <object class="ttk.Frame" id="frame6">
-                <property name="height">100</property>
-                <property name="width">800</property>
+              <object class="ttk.Panedwindow" id="panedwindow1">
+                <property name="height">500</property>
+                <property name="width">1200</property>
                 <layout manager="pack">
-                  <property name="anchor">nw</property>
-                  <property name="side">bottom</property>
+                  <property name="expand">true</property>
+                  <property name="fill">both</property>
+                  <property name="side">top</property>
                 </layout>
                 <child>
-                  <object class="ttk.Frame" id="frame7">
-                    <property name="height">200</property>
-                    <property name="width">200</property>
+                  <object class="ttk.Frame" id="graph_left_frame" named="True">
+                    <property name="height">400</property>
+                    <property name="width">800</property>
                     <layout manager="pack">
+                      <property name="expand">true</property>
+                      <property name="fill">both</property>
+                      <property name="side">left</property>
+                    </layout>
+                    <child>
+                      <object class="ttk.Frame" id="main_controls_frame">
+                        <property name="height">300</property>
+                        <property name="width">800</property>
+                        <layout manager="pack">
+                          <property name="fill">x</property>
+                          <property name="side">bottom</property>
+                        </layout>
+                        <child>
+                          <object class="ttk.Label" id="main_label">
+                            <property name="text" translatable="yes">Measurement Controls</property>
+                            <layout manager="pack">
+                              <property name="pady">5</property>
+                              <property name="side">top</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Frame" id="stats_frame" named="True">
+                            <property name="height">100</property>
+                            <property name="width">400</property>
+                            <layout manager="pack">
+                              <property name="fill">x</property>
+                              <property name="pady">10</property>
+                              <property name="side">top</property>
+                            </layout>
+                            <child>
+                              <object class="ttk.Label" id="stats_min_label" named="True">
+                                <property name="text" translatable="yes">Min: --</property>
+                                <layout manager="pack">
+                                  <property name="padx">10</property>
+                                  <property name="side">left</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="ttk.Label" id="stats_max_label" named="True">
+                                <property name="text" translatable="yes">Max: --</property>
+                                <layout manager="pack">
+                                  <property name="padx">10</property>
+                                  <property name="side">left</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="ttk.Label" id="stats_avg_label" named="True">
+                                <property name="text" translatable="yes">Avg: --</property>
+                                <layout manager="pack">
+                                  <property name="padx">10</property>
+                                  <property name="side">left</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="ttk.Label" id="stats_std_label" named="True">
+                                <property name="text" translatable="yes">Std: --</property>
+                                <layout manager="pack">
+                                  <property name="padx">10</property>
+                                  <property name="side">left</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="ttk.Label" id="stats_count_label" named="True">
+                                <property name="text" translatable="yes">Count: 0</property>
+                                <layout manager="pack">
+                                  <property name="padx">10</property>
+                                  <property name="side">left</property>
+                                </layout>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Frame" id="mode_frame">
+                            <property name="height">30</property>
+                            <property name="width">600</property>
+                            <layout manager="pack">
+                              <property name="fill">x</property>
+                              <property name="pady">5</property>
+                              <property name="side">top</property>
+                            </layout>
+                            <child>
+                              <object class="ttk.Button" id="volt_dc_btn" named="True">
+                                <property name="command" type="command" cbtype="simple">volt_dc_pressed</property>
+                                <property name="text" translatable="yes">VDC</property>
+                                <layout manager="pack">
+                                  <property name="padx">2</property>
+                                  <property name="side">left</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="ttk.Button" id="volt_ac_btn" named="True">
+                                <property name="command" type="command" cbtype="simple">volt_ac_pressed</property>
+                                <property name="text" translatable="yes">VAC</property>
+                                <layout manager="pack">
+                                  <property name="padx">2</property>
+                                  <property name="side">left</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="ttk.Button" id="curr_dc_btn" named="True">
+                                <property name="command" type="command" cbtype="simple">curr_dc_pressed</property>
+                                <property name="text" translatable="yes">IDC</property>
+                                <layout manager="pack">
+                                  <property name="padx">2</property>
+                                  <property name="side">left</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="ttk.Button" id="curr_ac_btn" named="True">
+                                <property name="command" type="command" cbtype="simple">curr_ac_pressed</property>
+                                <property name="text" translatable="yes">IAC</property>
+                                <layout manager="pack">
+                                  <property name="padx">2</property>
+                                  <property name="side">left</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="ttk.Button" id="ohm_btn" named="True">
+                                <property name="command" type="command" cbtype="simple">ohm_pressed</property>
+                                <property name="text" translatable="yes">OHM</property>
+                                <layout manager="pack">
+                                  <property name="padx">2</property>
+                                  <property name="side">left</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="ttk.Button" id="ohmf_btn" named="True">
+                                <property name="command" type="command" cbtype="simple">ohmf_pressed</property>
+                                <property name="text" translatable="yes">OHMF</property>
+                                <layout manager="pack">
+                                  <property name="padx">2</property>
+                                  <property name="side">left</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="ttk.Button" id="acdc_btn" named="True">
+                                <property name="command" type="command" cbtype="simple">acdc_pressed</property>
+                                <property name="text" translatable="yes">ACDCI</property>
+                                <layout manager="pack">
+                                  <property name="padx">2</property>
+                                  <property name="side">left</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="ttk.Button" id="freq_btn" named="True">
+                                <property name="command" type="command" cbtype="simple">freq_pressed</property>
+                                <property name="text" translatable="yes">FREQ</property>
+                                <layout manager="pack">
+                                  <property name="padx">2</property>
+                                  <property name="side">left</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="ttk.Frame" id="histogram_chk_frame">
+                                <property name="height">30</property>
+                                <property name="width">200</property>
+                                <layout manager="pack">
+                                  <property name="padx">10</property>
+                                  <property name="side">right</property>
+                                </layout>
+                                <child>
+                                  <object class="ttk.Checkbutton" id="histogram_checkbox" named="True">
+                                    <property name="command" type="command" cbtype="simple">histogram_checked</property>
+                                    <property name="offvalue">0</property>
+                                    <property name="onvalue">1</property>
+                                    <property name="text" translatable="yes">Show Histogram</property>
+                                    <property name="variable">int:hm_var</property>
+                                    <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
+                                    <layout manager="pack">
+                                      <property name="padx">20</property>
+                                      <property name="pady">5</property>
+                                      <property name="side">left</property>
+                                    </layout>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Frame" id="device_control_frame">
+                            <property name="height">60</property>
+                            <property name="width">800</property>
+                            <layout manager="pack">
+                              <property name="fill">x</property>
+                              <property name="pady">5</property>
+                              <property name="side">top</property>
+                            </layout>
+                            <child>
+                              <object class="ttk.Button" id="start_btn" named="True">
+                                <property name="command" type="command" cbtype="simple">start_measurement</property>
+                                <property name="state">disabled</property>
+                                <property name="text" translatable="yes">Start</property>
+                                <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
+                                <layout manager="pack">
+                                  <property name="padx">5</property>
+                                  <property name="side">left</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="ttk.Button" id="stop_btn" named="True">
+                                <property name="command" type="command" cbtype="simple">stop_measurement</property>
+                                <property name="state">disabled</property>
+                                <property name="text" translatable="yes">Stop</property>
+                                <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
+                                <layout manager="pack">
+                                  <property name="padx">5</property>
+                                  <property name="side">left</property>
+                                </layout>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Frame" id="histogram_pane" named="True">
+                    <property name="height">400</property>
+                    <property name="width">300</property>
+                    <layout manager="pack">
+                      <property name="expand">false</property>
+                      <property name="fill">both</property>
+                      <property name="side">right</property>
+                    </layout>
+                    <child>
+                      <object class="ttk.Frame" id="frame1">
+                        <property name="height">300</property>
+                        <property name="width">200</property>
+                        <layout manager="pack">
+                          <property name="fill">x</property>
+                          <property name="side">bottom</property>
+                        </layout>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Notebook.Tab" id="tab_settings">
+            <property name="text" translatable="yes">Settings</property>
+            <child>
+              <object class="ttk.Frame" id="settings_frame">
+                <property name="height">400</property>
+                <property name="width">500</property>
+                <layout manager="pack">
+                  <property name="expand">true</property>
+                  <property name="fill">both</property>
+                  <property name="padx">10</property>
+                  <property name="pady">10</property>
+                  <property name="side">top</property>
+                </layout>
+                <child>
+                  <object class="ttk.Label" id="settings_label">
+                    <property name="text" translatable="yes">Device Settings</property>
+                    <layout manager="pack">
+                      <property name="pady">5</property>
+                      <property name="side">top</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Separator" id="settings_sep1">
+                    <property name="orient">horizontal</property>
+                    <layout manager="pack">
+                      <property name="fill">x</property>
+                      <property name="pady">10</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Label" id="device_settings_label">
+                    <property name="text" translatable="yes">Device Connection</property>
+                    <layout manager="pack">
+                      <property name="pady">5</property>
+                      <property name="side">top</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Frame" id="gpib_device_frame">
+                    <property name="height">30</property>
+                    <property name="width">400</property>
+                    <layout manager="pack">
+                      <property name="fill">x</property>
+                      <property name="pady">5</property>
                       <property name="side">top</property>
                     </layout>
                     <child>
-                      <object class="tk.Canvas" id="canvas1">
-			<property name="height">200</property>
-                        <property name="width">200</property>
-                        <layout manager="pack">			 
-                          <property name="side">top</property>			 
-			  <property name="expand">false</property>
+                      <object class="ttk.Label" id="device_label" named="True">
+                        <property name="text" translatable="yes">GPIB Device:</property>
+                        <layout manager="pack">
+                          <property name="padx">5</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Combobox" id="device_combo" named="True">
+                        <property name="height">25</property>
+                        <property name="state">readonly</property>
+                        <property name="width">10</property>
+                        <bind sequence="&lt;&lt;ComboboxSelected&gt;&gt;" handler="callback" add="True" />
+                        <bind sequence="&lt;Return&gt;" handler="callback" add="True" />
+                        <layout manager="pack">
+                          <property name="padx">5</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Button" id="connect_btn" named="True">
+                        <property name="command" type="command" cbtype="simple">connect_device</property>
+                        <property name="text" translatable="yes">Connect</property>
+                        <layout manager="pack">
+                          <property name="padx">5</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Label" id="status_label" named="True">
+                        <property name="text" translatable="yes">Disconnected</property>
+                        <layout manager="pack">
+                          <property name="pady">5</property>
+                          <property name="side">top</property>
                         </layout>
                       </object>
                     </child>
                   </object>
                 </child>
                 <child>
-                  <object class="ttk.Frame" id="frame18">
-                    <property name="height">100</property>
-                    <property name="width">800</property>
+                  <object class="ttk.Frame" id="gpib_addr_frame">
+                    <property name="height">30</property>
+                    <property name="width">400</property>
                     <layout manager="pack">
+                      <property name="fill">x</property>
+                      <property name="pady">5</property>
                       <property name="side">top</property>
                     </layout>
                     <child>
-                      <object class="ttk.Checkbutton" id="ac_checkbox" named="True">
-                        <property name="command" type="command" cbtype="simple">ac_checked</property>
-                        <property name="offvalue">0</property>
-                        <property name="onvalue">1</property>
-                        <property name="text" translatable="yes">AC</property>
-                        <property name="variable">int:ac_var</property>
-                        <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
-                        <layout manager="pack">
-                          <property name="ipadx">2</property>
-                          <property name="ipady">2</property>
-                          <property name="padx">2</property>
-                          <property name="pady">2</property>
-                          <property name="side">right</property>
-                        </layout>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="ttk.Checkbutton" id="histogram_checkbox" named="True">
-                        <property name="command" type="command" cbtype="simple">histogram_checked</property>
-                        <property name="offvalue">0</property>
-                        <property name="onvalue">1</property>
-                        <property name="text" translatable="yes">Histogram</property>
-                        <property name="variable">int:hm_var</property>
-                        <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
-                        <layout manager="pack">
-                          <property name="ipadx">2</property>
-                          <property name="ipady">2</property>
-                          <property name="padx">2</property>
-                          <property name="pady">2</property>
-                          <property name="side">right</property>
-                        </layout>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="ttk.Button" id="voltage_button" named="True">
-                        <property name="command" type="command" cbtype="simple">voltage_pressed</property>
-                        <property name="text" translatable="yes">Voltage</property>
-                        <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
-                        <layout manager="pack">
-                          <property name="side">left</property>
-                        </layout>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="ttk.Button" id="current_button" named="True">
-                        <property name="command" type="command" cbtype="simple">current_pressed</property>
-                        <property name="text" translatable="yes">Current</property>
-                        <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
-                        <layout manager="pack">
-                          <property name="side">left</property>
-                        </layout>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="ttk.Button" id="resistance_button" named="True">
-                        <property name="command" type="command" cbtype="simple">resistance_pressed</property>
-                        <property name="text" translatable="yes">Resistance</property>
-                        <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
-                        <layout manager="pack">
-                          <property name="side">left</property>
-                        </layout>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="ttk.Button" id="frequency_button" named="True">
-                        <property name="command" type="command" cbtype="simple">frequency_pressed</property>
-                        <property name="text" translatable="yes">Frequency</property>
-                        <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
-                        <layout manager="pack">
-                          <property name="ipadx">0</property>
-                          <property name="ipady">0</property>
-                          <property name="padx">0</property>
-                          <property name="pady">0</property>
-                          <property name="side">left</property>
-                        </layout>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="ttk.Button" id="button5" named="True">
-                        <property name="command" type="command" cbtype="simple">acdci_pressed</property>
-                        <property name="text" translatable="yes">ACDCI</property>
-                        <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
-                        <layout manager="pack">
-                          <property name="side">left</property>
-                        </layout>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="ttk.Button" id="button9" named="True">
-                        <property name="command" type="command" cbtype="simple">acdcv_pressed</property>
-                        <property name="text" translatable="yes">ACDCV</property>
-                        <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
-                        <layout manager="pack">
-                          <property name="side">left</property>
-                        </layout>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="ttk.Button" id="button12" named="True">
-                        <property name="command" type="command" cbtype="simple">resistancefw_pressed</property>
-                        <property name="text" translatable="yes">Resistance 4W</property>
-                        <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
-                        <layout manager="pack">
-                          <property name="side">left</property>
-                        </layout>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="ttk.Separator" id="separator2">
-                        <property name="orient">horizontal</property>
+                      <object class="ttk.Label" id="gpib_addr_label">
+                        <property name="text" translatable="yes">GPIB Address:</property>
                         <layout manager="pack">
                           <property name="padx">5</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Entry" id="gpib_device_entry" named="True">
+                        <property name="text" translatable="yes">22</property>
+                        <property name="width">5</property>
+                        <layout manager="pack">
+                          <property name="padx">5</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Button" id="gpib_device_btn" named="True">
+                        <property name="command" type="command" cbtype="simple">gpib_addr_pressed</property>
+                        <property name="text" translatable="yes">Set</property>
+                        <layout manager="pack">
+                          <property name="padx">5</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Separator" id="settings_sep2">
+                    <property name="orient">horizontal</property>
+                    <layout manager="pack">
+                      <property name="fill">x</property>
+                      <property name="pady">10</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Label" id="params_settings_label">
+                    <property name="text" translatable="yes">Measurement Parameters</property>
+                    <layout manager="pack">
+                      <property name="pady">5</property>
+                      <property name="side">top</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Frame" id="nrdgs_frame">
+                    <property name="height">30</property>
+                    <property name="width">400</property>
+                    <layout manager="pack">
+                      <property name="fill">x</property>
+                      <property name="pady">5</property>
+                      <property name="side">top</property>
+                    </layout>
+                    <child>
+                      <object class="ttk.Label" id="nrdgs_label">
+                        <property name="text" translatable="yes">NRDGS:</property>
+                        <layout manager="pack">
+                          <property name="padx">5</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Entry" id="nrdgs_entry" named="True">
+                        <property name="text" translatable="yes">1</property>
+                        <property name="width">5</property>
+                        <layout manager="pack">
+                          <property name="padx">2</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Button" id="nrdgs_btn" named="True">
+                        <property name="command" type="command" cbtype="simple">nrdgs_pressed</property>
+                        <property name="text" translatable="yes">Set</property>
+                        <layout manager="pack">
+                          <property name="padx">5</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Frame" id="digits_frame">
+                    <property name="height">30</property>
+                    <property name="width">400</property>
+                    <layout manager="pack">
+                      <property name="fill">x</property>
+                      <property name="pady">5</property>
+                      <property name="side">top</property>
+                    </layout>
+                    <child>
+                      <object class="ttk.Label" id="digits_label">
+                        <property name="text" translatable="yes">Digits:</property>
+                        <layout manager="pack">
+                          <property name="padx">5</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Entry" id="digits_entry" named="True">
+                        <property name="text" translatable="yes">6</property>
+                        <property name="width">5</property>
+                        <layout manager="pack">
+                          <property name="padx">2</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Button" id="digits_btn" named="True">
+                        <property name="command" type="command" cbtype="simple">digits_pressed</property>
+                        <property name="text" translatable="yes">Set</property>
+                        <layout manager="pack">
+                          <property name="padx">5</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Frame" id="nplc_frame">
+                    <property name="height">30</property>
+                    <property name="width">400</property>
+                    <layout manager="pack">
+                      <property name="fill">x</property>
+                      <property name="pady">5</property>
+                      <property name="side">top</property>
+                    </layout>
+                    <child>
+                      <object class="ttk.Label" id="nplc_label">
+                        <property name="text" translatable="yes">NPLC:</property>
+                        <layout manager="pack">
+                          <property name="padx">5</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Entry" id="nplc_entry" named="True">
+                        <property name="text" translatable="yes">1</property>
+                        <property name="width">5</property>
+                        <layout manager="pack">
+                          <property name="padx">2</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Button" id="nplc_btn" named="True">
+                        <property name="command" type="command" cbtype="simple">nplc_pressed</property>
+                        <property name="text" translatable="yes">Set</property>
+                        <layout manager="pack">
+                          <property name="padx">5</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Frame" id="acband_frame">
+                    <property name="height">30</property>
+                    <property name="width">400</property>
+                    <layout manager="pack">
+                      <property name="fill">x</property>
+                      <property name="pady">5</property>
+                      <property name="side">top</property>
+                    </layout>
+                    <child>
+                      <object class="ttk.Label" id="acband_label">
+                        <property name="text" translatable="yes">AC Bandwidth:</property>
+                        <layout manager="pack">
+                          <property name="padx">5</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Entry" id="acband_entry" named="True">
+                        <property name="text" translatable="yes">200</property>
+                        <property name="width">5</property>
+                        <layout manager="pack">
+                          <property name="padx">2</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Button" id="acband_btn" named="True">
+                        <property name="command" type="command" cbtype="simple">acband_pressed</property>
+                        <property name="text" translatable="yes">Set</property>
+                        <layout manager="pack">
+                          <property name="padx">5</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Separator" id="settings_sep3">
+                    <property name="orient">horizontal</property>
+                    <layout manager="pack">
+                      <property name="fill">x</property>
+                      <property name="pady">10</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Label" id="options_settings_label">
+                    <property name="text" translatable="yes">Options</property>
+                    <layout manager="pack">
+                      <property name="pady">5</property>
+                      <property name="side">top</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Frame" id="options_frame">
+                    <property name="height">100</property>
+                    <property name="width">400</property>
+                    <layout manager="pack">
+                      <property name="fill">x</property>
+                      <property name="pady">5</property>
+                      <property name="side">top</property>
+                    </layout>
+                    <child>
+                      <object class="ttk.Checkbutton" id="lock_checkbox" named="True">
+                        <property name="command" type="command" cbtype="simple">lock_checked</property>
+                        <property name="offvalue">0</property>
+                        <property name="onvalue">1</property>
+                        <property name="text" translatable="yes">Lock</property>
+                        <property name="variable">int:lock_var</property>
+                        <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
+                        <layout manager="pack">
+                          <property name="padx">20</property>
+                          <property name="pady">5</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Checkbutton" id="trigger_checkbox" named="True">
+                        <property name="command" type="command" cbtype="simple">trigger_checked</property>
+                        <property name="offvalue">0</property>
+                        <property name="onvalue">1</property>
+                        <property name="text" translatable="yes">Trigger</property>
+                        <property name="variable">int:trig_var</property>
+                        <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
+                        <layout manager="pack">
+                          <property name="padx">20</property>
+                          <property name="pady">5</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Checkbutton" id="fixedz_checkbox" named="True">
+                        <property name="command" type="command" cbtype="simple">fixedz_checked</property>
+                        <property name="offvalue">0</property>
+                        <property name="onvalue">1</property>
+                        <property name="text" translatable="yes">FixedZ</property>
+                        <property name="variable">int:fixedz_var</property>
+                        <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
+                        <layout manager="pack">
+                          <property name="padx">20</property>
+                          <property name="pady">5</property>
                           <property name="side">left</property>
                         </layout>
                       </object>
@@ -193,472 +699,239 @@
         </child>
         <child>
           <object class="ttk.Notebook.Tab" id="tab2">
-            <property name="text" translatable="yes">Settings</property>
-            <child>
-              <object class="ttk.Frame" id="frame19">
-                <property name="height">200</property>
-                <property name="width">200</property>
-                <layout manager="pack">
-                  <property name="side">top</property>
-                </layout>
-                <child>
-                  <object class="ttk.Frame" id="frame20">
-                    <property name="height">200</property>
-                    <property name="width">200</property>
-                    <layout manager="pack">
-                      <property name="side">left</property>
-                    </layout>
-                    <child>
-                      <object class="ttk.Frame" id="frame10">
-                        <property name="height">20</property>
-                        <property name="width">200</property>
-                        <layout manager="pack">
-                          <property name="side">top</property>
-                        </layout>
-                        <child>
-                          <object class="ttk.Entry" id="entry3">
-                            <layout manager="pack">
-                              <property name="side">left</property>
-                            </layout>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="ttk.Button" id="NRDGS_button" named="True">
-                            <property name="command" type="command" cbtype="simple">nrdgs_pressed</property>
-                            <property name="text" translatable="yes">NRDGS</property>
-                            <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
-                            <layout manager="pack">
-                              <property name="side">right</property>
-                            </layout>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="ttk.Frame" id="frame13">
-                        <property name="height">20</property>
-                        <property name="width">200</property>
-                        <layout manager="pack">
-                          <property name="side">top</property>
-                        </layout>
-                        <child>
-                          <object class="ttk.Entry" id="entry5">
-                            <layout manager="pack">
-                              <property name="side">left</property>
-                            </layout>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="ttk.Button" id="digits_button" named="True">
-                            <property name="command" type="command" cbtype="simple">digits_pressed</property>
-                            <property name="text" translatable="yes">Digits</property>
-                            <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
-                            <layout manager="pack">
-                              <property name="side">right</property>
-                            </layout>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="ttk.Frame" id="frame14">
-                        <property name="height">20</property>
-                        <property name="width">200</property>
-                        <layout manager="pack">
-                          <property name="side">top</property>
-                        </layout>
-                        <child>
-                          <object class="ttk.Entry" id="entry6">
-                            <layout manager="pack">
-                              <property name="side">left</property>
-                            </layout>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="ttk.Button" id="nplc_button" named="True">
-                            <property name="command" type="command" cbtype="simple">nplc_pressed</property>
-                            <property name="text" translatable="yes">NPLC</property>
-                            <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
-                            <layout manager="pack">
-                              <property name="side">right</property>
-                            </layout>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="ttk.Frame" id="frame15">
-                        <property name="height">20</property>
-                        <property name="width">200</property>
-                        <layout manager="pack">
-                          <property name="anchor">center</property>
-                          <property name="side">bottom</property>
-                        </layout>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="ttk.Frame" id="frame23">
-                        <property name="height">200</property>
-                        <property name="width">200</property>
-                        <layout manager="pack">
-                          <property name="side">top</property>
-                        </layout>
-                        <child>
-                          <object class="ttk.Entry" id="entry7">
-                            <layout manager="pack">
-                              <property name="side">left</property>
-                            </layout>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="ttk.Button" id="button22" named="True">
-                            <property name="command" type="command" cbtype="simple">nrdgs_pressed</property>
-                            <property name="text" translatable="yes">NRDGS</property>
-                            <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
-                            <layout manager="pack">
-                              <property name="side">right</property>
-                            </layout>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="ttk.Frame" id="frame24">
-                        <property name="height">200</property>
-                        <property name="width">200</property>
-                        <layout manager="pack">
-                          <property name="side">top</property>
-                        </layout>
-                        <child>
-                          <object class="ttk.Entry" id="entry9">
-                            <layout manager="pack">
-                              <property name="side">left</property>
-                            </layout>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="ttk.Button" id="button24" named="True">
-                            <property name="command" type="command" cbtype="simple">acband_pressed</property>
-                            <property name="text" translatable="yes">ACBAND</property>
-                            <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
-                            <layout manager="pack">
-                              <property name="side">right</property>
-                            </layout>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="ttk.Frame" id="frame25">
-                        <property name="height">200</property>
-                        <property name="width">200</property>
-                        <layout manager="pack">
-                          <property name="side">top</property>
-                        </layout>
-                        <child>
-                          <object class="ttk.Entry" id="entry8">
-                            <layout manager="pack">
-                              <property name="side">left</property>
-                            </layout>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="ttk.Button" id="button23" named="True">
-                            <property name="command" type="command" cbtype="simple">digits_pressed</property>
-                            <property name="text" translatable="yes">Digits</property>
-                            <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
-                            <layout manager="pack">
-                              <property name="side">right</property>
-                            </layout>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="ttk.Frame" id="frame21">
-                        <property name="height">200</property>
-                        <property name="width">200</property>
-                        <layout manager="pack">
-                          <property name="side">top</property>
-                        </layout>
-                        <child>
-                          <object class="ttk.Checkbutton" id="checkbutton1">
-                            <property name="compound">top</property>
-                            <property name="cursor">arrow</property>
-                            <property name="offvalue">0</property>
-                            <property name="onvalue">1</property>
-                            <property name="text" translatable="yes">FixedZ</property>
-                            <property name="variable">string:FZ_var</property>
-                            <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
-                            <layout manager="pack">
-                              <property name="ipadx">2</property>
-                              <property name="side">left</property>
-                            </layout>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="ttk.Checkbutton" id="checkbutton2">
-                            <property name="command" type="command" cbtype="simple">lock_pressed</property>
-                            <property name="compound">top</property>
-                            <property name="cursor">arrow</property>
-                            <property name="offvalue">0</property>
-                            <property name="onvalue">1</property>
-                            <property name="state">normal</property>
-                            <property name="text" translatable="yes">Lock</property>
-                            <property name="variable">string:lk_var</property>
-                            <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
-                            <layout manager="pack">
-                              <property name="ipadx">2</property>
-                              <property name="side">left</property>
-                            </layout>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="ttk.Checkbutton" id="checkbutton3">
-                            <property name="command" type="command" cbtype="simple">trigger_pressed</property>
-                            <property name="compound">top</property>
-                            <property name="cursor">arrow</property>
-                            <property name="offvalue">0</property>
-                            <property name="onvalue">1</property>
-                            <property name="state">normal</property>
-                            <property name="text" translatable="yes">Trigger</property>
-                            <property name="variable">string:tr_var</property>
-                            <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
-                            <layout manager="pack">
-                              <property name="ipadx">2</property>
-                              <property name="side">left</property>
-                            </layout>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-                <child>
-                  <object class="ttk.Frame" id="frame22">
-                    <property name="height">200</property>
-                    <property name="width">200</property>
-                    <layout manager="pack">
-                      <property name="side">right</property>
-                    </layout>
-                    <child>
-                      <object class="ttk.Frame" id="frame9">
-                        <property name="height">200</property>
-                        <property name="width">200</property>
-                        <layout manager="pack">
-                          <property name="side">top</property>
-                        </layout>
-                        <child>
-                          <object class="ttk.Label" id="label1">
-                            <property name="compound">top</property>
-                            <property name="cursor">arrow</property>
-                            <property name="justify">left</property>
-                            <property name="text" translatable="yes">Interface</property>
-                            <layout manager="pack">
-                              <property name="side">top</property>
-                            </layout>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="ttk.Combobox" id="combobox1">
-                            <property name="textvariable">string:de_var</property>
-                            <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
-                            <bind sequence="&lt;Visibility&gt;" handler="callback" add="True" />
-                            <layout manager="pack">
-                              <property name="side">top</property>
-                            </layout>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-              </object>
-            </child>
-          </object>
-        </child>
-        <child>
-          <object class="ttk.Notebook.Tab" id="tab3">
             <property name="text" translatable="yes">Data Settings</property>
             <child>
-              <object class="ttk.Frame" id="frame1">
-                <property name="height">200</property>
-                <property name="width">200</property>
+              <object class="ttk.Frame" id="data_settings_frame">
+                <property name="height">400</property>
+                <property name="width">500</property>
                 <layout manager="pack">
+                  <property name="expand">true</property>
+                  <property name="fill">both</property>
+                  <property name="padx">10</property>
+                  <property name="pady">10</property>
                   <property name="side">top</property>
                 </layout>
                 <child>
-                  <object class="ttk.Frame" id="frame2">
-                    <property name="height">200</property>
-                    <property name="width">200</property>
+                  <object class="ttk.Label" id="data_settings_label">
+                    <property name="text" translatable="yes">Data Collection Settings</property>
                     <layout manager="pack">
-                      <property name="side">left</property>
+                      <property name="pady">5</property>
+                      <property name="side">top</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Frame" id="interval_frame">
+                    <property name="height">30</property>
+                    <property name="width">300</property>
+                    <layout manager="pack">
+                      <property name="fill">x</property>
+                      <property name="pady">5</property>
+                      <property name="side">top</property>
                     </layout>
                     <child>
-                      <object class="ttk.Frame" id="frame3">
-                        <property name="height">20</property>
-                        <property name="width">200</property>
+                      <object class="ttk.Label" id="interval_label">
+                        <property name="text" translatable="yes">Interval (sec):</property>
                         <layout manager="pack">
-                          <property name="side">top</property>
+                          <property name="padx">10</property>
+                          <property name="side">left</property>
                         </layout>
-                        <child>
-                          <object class="ttk.Entry" id="entry1">
-                            <layout manager="pack">
-                              <property name="side">left</property>
-                            </layout>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="ttk.Button" id="button1" named="True">
-                            <property name="command" type="command" cbtype="simple">safve</property>
-                            <property name="compound">top</property>
-                            <property name="text" translatable="yes">Savepath</property>
-                            <bind sequence="&lt;1&gt;" handler="callback" add="True" />
-                            <layout manager="pack">
-                              <property name="side">right</property>
-                            </layout>
-                          </object>
-                        </child>
                       </object>
                     </child>
                     <child>
-                      <object class="ttk.Frame" id="frame4">
-                        <property name="height">20</property>
-                        <property name="width">200</property>
+                      <object class="ttk.Entry" id="interval_entry" named="True">
+                        <property name="text" translatable="yes">1.0</property>
                         <layout manager="pack">
-                          <property name="side">top</property>
+                          <property name="padx">5</property>
+                          <property name="side">left</property>
                         </layout>
-                        <child>
-                          <object class="ttk.Entry" id="entry2">
-                            <layout manager="pack">
-                              <property name="side">left</property>
-                            </layout>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="ttk.Button" id="button2" named="True">
-                            <property name="command" type="command" cbtype="simple">max_points_pressed</property>
-                            <property name="text" translatable="yes">Max Points</property>
-                            <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
-                            <layout manager="pack">
-                              <property name="side">right</property>
-                            </layout>
-                          </object>
-                        </child>
                       </object>
                     </child>
                     <child>
-                      <object class="ttk.Frame" id="frame5">
-                        <property name="height">20</property>
-                        <property name="width">200</property>
+                      <object class="ttk.Button" id="interval_btn" named="True">
+                        <property name="command" type="command" cbtype="simple">_apply_interval</property>
+                        <property name="text" translatable="yes">Apply</property>
                         <layout manager="pack">
-                          <property name="side">top</property>
+                          <property name="padx">10</property>
+                          <property name="side">left</property>
                         </layout>
-                        <child>
-                          <object class="ttk.Entry" id="entry4">
-                            <layout manager="pack">
-                              <property name="side">left</property>
-                            </layout>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="ttk.Button" id="button3" named="True">
-                            <property name="command" type="command" cbtype="simple">sampless_pressed</property>
-                            <property name="cursor">arrow</property>
-                            <property name="default">normal</property>
-                            <property name="text" translatable="yes">Samples/s</property>
-                            <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
-                            <layout manager="pack">
-                              <property name="side">right</property>
-                            </layout>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="ttk.Frame" id="frame8">
-                        <property name="height">20</property>
-                        <property name="width">200</property>
-                        <layout manager="pack">
-                          <property name="anchor">center</property>
-                          <property name="side">bottom</property>
-                        </layout>
-                        <child>
-                          <object class="ttk.Button" id="button4" named="True">
-                            <property name="command" type="command" cbtype="simple">saveas_pressed</property>
-                            <property name="text" translatable="yes">Save As</property>
-                            <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
-                            <layout manager="pack">
-                              <property name="side">bottom</property>
-                            </layout>
-                          </object>
-                        </child>
                       </object>
                     </child>
                   </object>
                 </child>
                 <child>
-                  <object class="ttk.Frame" id="frame16">
-                    <property name="height">200</property>
-                    <property name="width">200</property>
+                  <object class="ttk.Frame" id="csv_frame">
+                    <property name="height">30</property>
+                    <property name="width">300</property>
                     <layout manager="pack">
-                      <property name="side">right</property>
+                      <property name="fill">x</property>
+                      <property name="pady">5</property>
+                      <property name="side">top</property>
                     </layout>
+                    <child>
+                      <object class="ttk.Label" id="max_csv_label">
+                        <property name="text" translatable="yes">Max CSV points:</property>
+                        <layout manager="pack">
+                          <property name="padx">10</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Entry" id="max_csv_entry" named="True">
+                        <property name="text" translatable="yes">0 (unlimited)</property>
+                        <layout manager="pack">
+                          <property name="padx">5</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Button" id="max_csv_btn" named="True">
+                        <property name="command" type="command" cbtype="simple">_apply_max_csv_points</property>
+                        <property name="text" translatable="yes">Apply</property>
+                        <layout manager="pack">
+                          <property name="padx">10</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Frame" id="savepath_frame">
+                    <property name="height">30</property>
+                    <property name="width">500</property>
+                    <layout manager="pack">
+                      <property name="fill">x</property>
+                      <property name="pady">5</property>
+                      <property name="side">top</property>
+                    </layout>
+                    <child>
+                      <object class="ttk.Label" id="savepath_label">
+                        <property name="text" translatable="yes">Save path:</property>
+                        <layout manager="pack">
+                          <property name="padx">10</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Entry" id="savepath_entry" named="True">
+                        <layout manager="pack">
+                          <property name="expand">true</property>
+                          <property name="fill">x</property>
+                          <property name="padx">5</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Button" id="browse_btn" named="True">
+                        <property name="command" type="command" cbtype="simple">_browse_csv_path</property>
+                        <property name="text" translatable="yes">Browse</property>
+                        <layout manager="pack">
+                          <property name="padx">10</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Frame" id="histogram_bins_frame">
+                    <property name="height">30</property>
+                    <property name="width">300</property>
+                    <layout manager="pack">
+                      <property name="fill">x</property>
+                      <property name="pady">5</property>
+                      <property name="side">top</property>
+                    </layout>
+                    <child>
+                      <object class="ttk.Label" id="bins_label">
+                        <property name="text" translatable="yes">Histogram bins:</property>
+                        <layout manager="pack">
+                          <property name="padx">10</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Entry" id="bins_entry" named="True">
+                        <property name="text" translatable="yes">50</property>
+                        <layout manager="pack">
+                          <property name="padx">5</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Button" id="bins_btn" named="True">
+                        <property name="command" type="command" cbtype="simple">_apply_bins</property>
+                        <property name="text" translatable="yes">Apply</property>
+                        <layout manager="pack">
+                          <property name="padx">10</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Separator" id="separator_data1">
+                    <property name="orient">horizontal</property>
+                    <layout manager="pack">
+                      <property name="fill">x</property>
+                      <property name="pady">10</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Frame" id="data_actions_frame">
+                    <property name="height">30</property>
+                    <property name="width">500</property>
+                    <layout manager="pack">
+                      <property name="fill">x</property>
+                      <property name="pady">5</property>
+                      <property name="side">top</property>
+                    </layout>
+                    <child>
+                      <object class="ttk.Button" id="save_csv_btn" named="True">
+                        <property name="command" type="command" cbtype="simple">_save_data_csv</property>
+                        <property name="text" translatable="yes">Save CSV</property>
+                        <layout manager="pack">
+                          <property name="padx">5</property>
+                          <property name="pady">5</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Button" id="clear_btn" named="True">
+                        <property name="command" type="command" cbtype="simple">_clear_data</property>
+                        <property name="text" translatable="yes">Clear Data</property>
+                        <layout manager="pack">
+                          <property name="padx">5</property>
+                          <property name="pady">5</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Button" id="reset_btn" named="True">
+                        <property name="command" type="command" cbtype="simple">_reset_canvas</property>
+                        <property name="text" translatable="yes">Reset Canvas</property>
+                        <layout manager="pack">
+                          <property name="padx">5</property>
+                          <property name="pady">5</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
                   </object>
                 </child>
               </object>
             </child>
-          </object>
-        </child>
-      </object>
-    </child>
-  </object>
-  <object class="pygubu.builder.widgets.dialog" id="dialog1">
-    <property name="height">100</property>
-    <property name="width">200</property>
-    <child>
-      <object class="ttk.Frame" id="frame26">
-        <property name="height">200</property>
-        <property name="width">200</property>
-        <layout manager="pack">
-          <property name="side">top</property>
-        </layout>
-        <child>
-          <object class="ttk.Button" id="button11">
-            <property name="command" type="command" cbtype="simple">up_pressed</property>
-            <property name="text" translatable="yes">up</property>
-            <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
-            <layout manager="pack">
-              <property name="side">left</property>
-            </layout>
-          </object>
-        </child>
-        <child>
-          <object class="ttk.Button" id="button10">
-            <property name="command" type="command" cbtype="simple">down__pressed</property>
-            <property name="text" translatable="yes">down</property>
-            <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
-            <layout manager="pack">
-              <property name="side">right</property>
-            </layout>
-          </object>
-        </child>
-      </object>
-    </child>
-    <child>
-      <object class="ttk.Frame" id="frame27">
-        <property name="height">200</property>
-        <property name="width">200</property>
-        <layout manager="pack">
-          <property name="side">top</property>
-        </layout>
-        <child>
-          <object class="ttk.Treeview" id="treeview1">
-            <property name="selectmode">extended</property>
-            <bind sequence="&lt;&lt;TreeviewSelect&gt;&gt;" handler="callback" add="True" />
-            <layout manager="pack">
-              <property name="side">bottom</property>
-            </layout>
           </object>
         </child>
       </object>

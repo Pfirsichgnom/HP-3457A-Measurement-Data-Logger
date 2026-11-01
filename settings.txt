@@ -1,0 +1,16 @@
+# GPIB Multimeter Settings
+# Format: key=value
+
+last_resource=GPIB0::22::INSTR
+measurement_interval=1.0
+max_points=1000
+histogram_bins=20
+max_csv_points=0
+save_path=
+nrdgs=1
+digits=6
+nplc=1
+acband=1
+lock_state=0
+trigger_state=0
+fixedz_state=0
