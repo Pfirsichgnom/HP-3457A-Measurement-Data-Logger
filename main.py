@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 
-from tkinter import messagebox, filedialog
+from tkinter import messagebox, filedialog, ttk
 
 sys.path.append(str(Path(__file__).resolve().parent / "pygubu"))
 from python3ui import guiUI
@@ -226,8 +226,6 @@ class gui(guiUI):
         self.save_path = ""
         self.max_csv_points = 0
         self.histogram_bins = 50
-        # Events posted by worker threads (connect results, connection loss),
-        # processed on the main thread by periodic_update()
         self._pending_ui = queue.Queue()
         self._connect_lock = threading.Lock()
         self._connect_in_progress = False
@@ -290,9 +288,17 @@ class gui(guiUI):
             self.ax.set_title('Live Measurement')
             self.ax.grid(True)
             
-            self.histogram_fig = Figure(figsize=(4, 3), dpi=100)
+            # Keep both plots the same height: the main canvas is
+            # shortened by the controls strip at the bottom of
+            # graph_left_frame, so mirror that strip in the histogram
+            # pane with an invisible spacer packed (full width) at the
+            # bottom, before the canvas. Kept in sync on resizes.
+            self._hist_spacer = ttk.Frame(self.histogram_pane)
+            self._hist_spacer.pack(side='bottom', fill='x')
+
+            self.histogram_fig = Figure(figsize=(4, 8), dpi=100)
             self.histogram_ax = self.histogram_fig.add_subplot(111)
-            self.hist_canvas = FigureCanvasTkAgg(self.histogram_fig, master=self.histogram_pane)
+            self.hist_canvas = FigureCanvasTkAgg(self.histogram_fig, master=self.histogram_pane )#histogram_pane)
             self.hist_canvas.get_tk_widget().pack(fill='both', expand=True)
             
             self.histogram_ax.set_xlabel('Value')
@@ -300,15 +306,14 @@ class gui(guiUI):
             self.histogram_ax.set_title('Measurement Distribution')
             self.histogram_ax.grid(True)
 
+  
+
             # Keep the histogram pane hidden at startup; it is shown by
             # the Histogram checkbox (see histogram_checked()).
             self.histogram_pane.pack_forget()
 
             device_list = self.gpib_inst_instance.get_devices()
-            if device_list:
-                self.device_combo['values'] = device_list
-                self.selected_device = device_list[0]
-                self.device_combo.set(self.selected_device)
+            self._setup_device_combo(device_list)
                 
         except Exception as e:
             if DEBUG:
@@ -316,12 +321,25 @@ class gui(guiUI):
     
     def _init_device_list(self):
         """Initialize device list."""
-        devices = self.gpib_inst_instance.get_devices()
-        if devices:
-            self.device_combo['values'] = devices
-            if not self.selected_device and devices:
-                self.selected_device = devices[0]
-                self.device_combo.set(self.selected_device)
+        self._setup_device_combo(self.gpib_inst_instance.get_devices())
+
+    def _setup_device_combo(self, devices):
+        """Fill the device combobox.
+
+        Sizes the combobox so that the longest device string is fully
+        visible (e.g. 'ASRL/dev/ttyS31::INSTR'), with a minimum width.
+        """
+        if not devices:
+            return
+        self.device_combo['values'] = devices
+        if not self.selected_device:
+            self.selected_device = devices[0]
+        self.device_combo.set(self.selected_device)
+        try:
+            longest = max(len(str(d)) for d in devices)
+            self.device_combo.config(width=max(20, longest + 2))
+        except Exception:
+            pass
     
     def _auto_connect_with_settings(self):
         """Try to auto-connect on startup using saved settings (non-blocking).
@@ -851,12 +869,7 @@ class gui(guiUI):
     
     def update_device_list(self):
         """Update device list in combo box."""
-        devices = self.gpib_inst_instance.get_devices()
-        if devices:
-            self.device_combo['values'] = devices
-            if not self.selected_device and devices:
-                self.selected_device = devices[0]
-                self.device_combo.set(self.selected_device)
+        self._setup_device_combo(self.gpib_inst_instance.get_devices())
     
     def volt_dc_pressed(self):
         """Handle VDC button."""
@@ -1017,19 +1030,6 @@ class gui(guiUI):
                 self.gpib_inst_instance.ACBAND(val)
         except:
             pass
-    
-    def gpib_addr_pressed(self):
-        """Handle GPIB address button - stub for future implementation."""
-        pass
-    
-    def gpib_device_pressed(self):
-        """Handle GPIB device connect button on Settings tab (non-blocking)."""
-        device = self.gpib_device_entry.get().strip()
-        if not device:
-            messagebox.showwarning("No Device", "Please enter a device resource")
-            return
-
-        self._start_connect(device)
 
 
 def periodic_update(app):

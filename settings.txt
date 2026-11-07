@@ -4,9 +4,9 @@
 last_resource=GPIB0::22::INSTR
 measurement_interval=1.0
 max_points=1000
-histogram_bins=20
+histogram_bins=50
 max_csv_points=0
-save_path=
+save_path=/data/git/gpib_multimeter/test.csv
 nrdgs=1
 digits=6
 nplc=1

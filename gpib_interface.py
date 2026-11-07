@@ -186,10 +186,13 @@ class gpio_interface:
                 self.instr = self._resource_manager.open_resource(device)
                 
                 # Set communication parameters
-                self.instr.timeout = 5000  # 5 second timeout
+                self.instr.timeout = 1000  # 1 second timeout
                 self.instr.write_termination = "\n"
                 self.instr.read_termination = "\n"
                 
+                print_debug("[GPIB] Writing PRESET to device...")
+                self.instr.write("PRESET")
+
                 print_debug("[GPIB] Writing END ALWAYS to device...")
                 self.instr.write("END ALWAYS")
                 

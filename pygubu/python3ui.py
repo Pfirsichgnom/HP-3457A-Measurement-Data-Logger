@@ -32,11 +32,12 @@ class guiUI:
         
         # Main container widgets
         self.notebook1 = self.builder.get_object("notebook1")
-        self.panedwindow1 = self.builder.get_object("panedwindow1")
         
         # Graph frames (for matplotlib embedding)
         self.graph_left_frame = self.builder.get_object("graph_left_frame")
-        self.histogram_pane = self.builder.get_object("histogram_pane")
+        self.histogram_pane = self.builder.get_object("hist_frame")#"histogram_pane")
+
+        self.hist_frame = self.builder.get_object("hist_frame")
         
         # Statistics frame and labels
         self.stats_frame = self.builder.get_object("stats_frame")
@@ -90,8 +91,6 @@ class guiUI:
         self.nplc_btn = self.builder.get_object("nplc_btn")
         self.acband_entry = self.builder.get_object("acband_entry")
         self.acband_btn = self.builder.get_object("acband_btn")
-        self.gpib_device_entry = self.builder.get_object("gpib_device_entry")
-        self.gpib_device_btn = self.builder.get_object("gpib_device_btn")
         self.settings_frame = self.builder.get_object("settings_frame")
         
         # Connect Pygubu callbacks and supplement with manual connections
@@ -126,8 +125,6 @@ class guiUI:
         self.digits_btn.config(command=self.digits_pressed)
         self.nplc_btn.config(command=self.nplc_pressed)
         self.acband_btn.config(command=self.acband_pressed)
-        self.gpib_device_entry.config(state='normal')
-        self.gpib_device_btn.config(command=self.gpib_device_pressed)
 
     def run(self):
         self.mainwindow.mainloop()
@@ -184,9 +181,6 @@ class guiUI:
     def acband_pressed(self):
         pass
 
-    def gpib_addr_pressed(self):
-        pass
-    
     def connect_device(self):
         pass
     
