@@ -30,7 +30,7 @@
         <property name="height">600</property>
         <property name="width">1200</property>
         <layout manager="pack">
-          <property name="expand">true</property>
+          <property name="expand">True</property>
           <property name="fill">both</property>
           <property name="side">top</property>
         </layout>
@@ -39,23 +39,23 @@
             <property name="text" translatable="yes">Measurment</property>
             <child>
               <object class="ttk.Frame" id="frame2">
-                <property name="height">500</property>
+                <property name="height">600</property>
                 <property name="width">1200</property>
                 <layout manager="pack">
                   <property name="side">top</property>
                 </layout>
                 <child>
                   <object class="ttk.Frame" id="frame3">
-                    <property name="height">300</property>
-                    <property name="width">800</property>
+                    <property name="height">400</property>
+                    <property name="width">1200</property>
                     <layout manager="pack">
-                      <property name="expand">true</property>
+                      <property name="expand">True</property>
                       <property name="fill">both</property>
                       <property name="side">top</property>
                     </layout>
                     <child>
                       <object class="ttk.Panedwindow" id="panedwindow2">
-                        <property name="height">500</property>
+                        <property name="height">400</property>
                         <property name="width">1200</property>
                         <layout manager="pack">
                           <property name="expand">True</property>
@@ -99,10 +99,10 @@
                     </layout>
                     <child>
                       <object class="ttk.Frame" id="mode_frame1" named="True">
-                        <property name="height">300</property>
+                        <property name="height">200</property>
                         <property name="width">800</property>
                         <layout manager="pack">
-                          <property name="expand">false</property>
+                          <property name="expand">True</property>
                           <property name="fill">x</property>
                           <property name="side">bottom</property>
                         </layout>
@@ -241,16 +241,6 @@
                               </object>
                             </child>
                             <child>
-                              <object class="ttk.Button" id="acdc_btn" named="True">
-                                <property name="command" type="command" cbtype="simple">acdc_pressed</property>
-                                <property name="text" translatable="yes">ACDCI</property>
-                                <layout manager="pack">
-                                  <property name="padx">2</property>
-                                  <property name="side">left</property>
-                                </layout>
-                              </object>
-                            </child>
-                            <child>
                               <object class="ttk.Button" id="freq_btn" named="True">
                                 <property name="command" type="command" cbtype="simple">freq_pressed</property>
                                 <property name="text" translatable="yes">FREQ</property>
@@ -368,8 +358,8 @@
             <property name="text" translatable="yes">Settings</property>
             <child>
               <object class="ttk.Frame" id="settings_frame">
-                <property name="height">400</property>
-                <property name="width">500</property>
+                <property name="height">600</property>
+                <property name="width">1200</property>
                 <layout manager="pack">
                   <property name="expand">true</property>
                   <property name="fill">both</property>
@@ -427,8 +417,8 @@
                         <property name="height">25</property>
                         <property name="state">readonly</property>
                         <property name="width">24</property>
-                        <bind sequence="&lt;&lt;ComboboxSelected&gt;&gt;" handler="callback" add="True" />
-                        <bind sequence="&lt;Return&gt;" handler="callback" add="True" />
+                        <bind sequence="&lt;&lt;ComboboxSelected&gt;&gt;" handler="device_combo_selected" add="True" />
+                        <bind sequence="&lt;Return&gt;" handler="device_combo_selected" add="True" />
                         <layout manager="pack">
                           <property name="padx">5</property>
                           <property name="side">left</property>
@@ -745,6 +735,21 @@
                         </layout>
                       </object>
                     </child>
+                    <child>
+                      <object class="ttk.Checkbutton" id="acdc_checkbox" named="True">
+                        <property name="command" type="command" cbtype="simple">acdc_checked</property>
+                        <property name="offvalue">0</property>
+                        <property name="onvalue">1</property>
+                        <property name="text" translatable="yes">ACDC</property>
+                        <property name="variable">int:acdc_var</property>
+                        <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
+                        <layout manager="pack">
+                          <property name="padx">20</property>
+                          <property name="pady">5</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
                   </object>
                 </child>
               </object>
@@ -756,8 +761,8 @@
             <property name="text" translatable="yes">Data Settings</property>
             <child>
               <object class="ttk.Frame" id="data_settings_frame">
-                <property name="height">400</property>
-                <property name="width">500</property>
+                <property name="height">600</property>
+                <property name="width">1200</property>
                 <layout manager="pack">
                   <property name="expand">true</property>
                   <property name="fill">both</property>
@@ -893,11 +898,38 @@
                   </object>
                 </child>
                 <child>
+                  <object class="ttk.Frame" id="frame1">
+                    <property name="height">200</property>
+                    <property name="width">200</property>
+                    <layout manager="pack">
+                      <property name="expand">false</property>
+                      <property name="fill">x</property>
+                      <property name="side">top</property>
+                    </layout>
+                    <child>
+                      <object class="ttk.Checkbutton" id="contsave_checkbox" named="True">
+                        <property name="command" type="command" cbtype="simple">cont_checked</property>
+                        <property name="offvalue">0</property>
+                        <property name="onvalue">1</property>
+                        <property name="text" translatable="yes">continuous data save</property>
+                        <property name="variable">int:cont_var</property>
+                        <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="True" />
+                        <layout manager="pack">
+                          <property name="fill">x</property>
+                          <property name="padx">10</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
                   <object class="ttk.Separator" id="separator_data1">
                     <property name="orient">horizontal</property>
                     <layout manager="pack">
                       <property name="fill">x</property>
                       <property name="pady">10</property>
+                      <property name="side">top</property>
                     </layout>
                   </object>
                 </child>

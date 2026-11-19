@@ -6,10 +6,10 @@
 import pyvisa
 import os
 import threading
+import datetime
 
-# Global debug switches (override with GPIB_DEBUG=1/0, GPIB_MEAS_DEBUG=1/0)
+# Global debug switches (override with GPIB_DEBUG=1/0)
 DEBUG = os.environ.get("GPIB_DEBUG", "1") == "1"
-MEASUREMENT_DEBUG = os.environ.get("GPIB_MEAS_DEBUG", "0") == "1"
 
 # GPIB mutex - protects all GPIB operations
 _gpib_lock = threading.RLock()
@@ -18,24 +18,10 @@ _gpib_lock = threading.RLock()
 _connection_lock = threading.Lock()
 _is_connected = False
 
-
 def print_debug(msg):
     """Print debug message if debugging is enabled."""
     if DEBUG:
         print(msg)
-
-
-def set_measurement_debug(enabled):
-    """Enable/disable debug output for measurement cycle."""
-    global MEASUREMENT_DEBUG
-    MEASUREMENT_DEBUG = enabled
-
-
-def measurement_debug(msg):
-    """Print measurement-specific debug messages."""
-    if MEASUREMENT_DEBUG:
-        print(f"[MEAS] {msg}")
-
 
 class GPIBConnectionError(Exception):
     """Exception raised for GPIB connection errors."""
@@ -52,22 +38,19 @@ class GPIBWriteError(Exception):
     pass
 
 
-class gpio_interface:
+class GPIBInterface:
     """GPIB interface class for multimeter control."""
     
     def __init__(self):
         self.instr_list = []
         self.instr = None
-        self.gpib_address = None
-        self.instr_id = None
         self._connected = False
         self._resource_manager = None
         
         try:
             self._resource_manager = pyvisa.ResourceManager("@py")
         except Exception as e:
-            if DEBUG:
-                print(f"[GPIB] Failed to create resource manager: {e}")
+            print_debug(f"[GPIB] Failed to create resource manager: {e}")
     
     def _write(self, cmd):
         """Write command to device with error handling."""
@@ -78,7 +61,8 @@ class gpio_interface:
                     self.instr.write(cmd)
                 except pyvisa.VisaIOError as e:
                     raise GPIBWriteError(f"Write error: {e}")
-    
+               
+
     def _query(self, cmd):
         """Write command and read response with error handling."""
         with _gpib_lock:
@@ -90,7 +74,8 @@ class gpio_interface:
                     return result
                 except pyvisa.VisaIOError as e:
                     raise GPIBReadError(f"Query error: {e}")
-    
+            return None
+
     def is_connected(self):
         """Thread-safe check if device is connected."""
         with _connection_lock:
@@ -105,7 +90,6 @@ class gpio_interface:
         """Discover available GPIB devices."""
         print_debug("[GPIB] Searching for devices...")
         self.instr_list = []
-        
         if self._resource_manager is None:
             print_debug("[GPIB] Resource manager not available")
             return self.instr_list
@@ -115,10 +99,7 @@ class gpio_interface:
             self.instr_list = list(devices)
             for device in self.instr_list:
                 print_debug(f"[GPIB] Found device: {device}")
-        except Exception as e:
-            print_debug(f"[GPIB] Error during device discovery: {e}")
-        
-        try:
+
             gpib_devs = self._get_gpib_devices_from_fs()
             for device in gpib_devs:
                 if device not in self.instr_list:
@@ -171,7 +152,6 @@ class gpio_interface:
         with _gpib_lock:
             try:
                 print_debug(f"[GPIB] Connecting to: {device}")
-                self.gpib_address = device
                 
                 if self._resource_manager is None:
                     raise GPIBConnectionError("Resource manager not available")
@@ -186,7 +166,7 @@ class gpio_interface:
                 self.instr = self._resource_manager.open_resource(device)
                 
                 # Set communication parameters
-                self.instr.timeout = 1000  # 1 second timeout
+                self.instr.timeout = 6000  # 1 second timeout
                 self.instr.write_termination = "\n"
                 self.instr.read_termination = "\n"
                 
@@ -199,14 +179,10 @@ class gpio_interface:
                 # Query device ID to verify connection
                 device_id = self.instr.query("*IDN?")
                 print_debug(f"[GPIB] Device ID: {device_id}")
-                self.instr_id = device_id
                 
                 self._set_connected_state(True)
                 print_debug("[GPIB] Connection established")
                 
-            except pyvisa.VisaIOError as e:
-                self._set_connected_state(False)
-                raise GPIBConnectionError(f"Failed to connect to {device}: {e}")
             except Exception as e:
                 self._set_connected_state(False)
                 raise GPIBConnectionError(f"Failed to connect to {device}: {e}")
@@ -279,6 +255,13 @@ class gpio_interface:
         else:
             self._write(f"ACV {range_val:.2f}")
     
+    def ACDCV(self, range_val):
+        """AC Voltage mode."""
+        if range_val == 0:
+            self._write("ACDCV AUTO")
+        else:
+            self._write(f"ACDCV {range_val:.2f}")
+    
     def DCI(self, range_val):
         """DC Current mode."""
         if range_val == 0:
@@ -308,7 +291,7 @@ class gpio_interface:
             self._write(f"OHM {range_val:.2e}")
     
     def OHMF(self, range_val):
-        """Forward resistance mode."""
+        """Four Wire resistance mode."""
         if range_val == 0:
             self._write("OHMF AUTO")
         else:
@@ -325,14 +308,13 @@ class gpio_interface:
     def writeTRIG(self):
         """Write trigger command."""
         with _gpib_lock:
-            print_debug(f"[GPIB] WRITE: TRIG")
             if self.instr:
                 try:
-                    self.instr.write("TRIG")
+                    self.TRIG_SYN()
                 except pyvisa.VisaIOError as e:
                     raise GPIBWriteError(f"Trigger error: {e}")
     
-    def R(self):
+    def read(self):
         """
         Read measurement value from device.
         
@@ -343,33 +325,14 @@ class gpio_interface:
             if self.instr:
                 try:
                     result = self.instr.read()
-                    if DEBUG:
-                        print_debug(f"[GPIB] READ: {result}")
+                    print_debug(f"[GPIB] READ: {result}")
                     return result
                 except pyvisa.VisaIOError as e:
                     print_debug(f"[GPIB] Read error: {e}")
                     return None
             return None
     
-    def query_with_measurement_debug(self, cmd):
-        """
-        Query command with measurement debug output.
-        
-        Note: This uses read() not query() for consistency.
-        """
-        with _gpib_lock:
-            measurement_debug(f"Sending: {cmd}")
-            if self.instr:
-                try:
-                    # Write command
-                    self.instr.write(cmd)
-                    # Read response
-                    result = self.instr.read()
-                    measurement_debug(f"Received: {result}")
-                    return result
-                except pyvisa.VisaIOError as e:
-                    measurement_debug(f"Query error: {e}")
-            return None
+
     
     # Configuration commands
     def PRESET(self):
@@ -398,7 +361,11 @@ class gpio_interface:
     
     def NPLC(self, val):
         """Set number of power line cycles."""
-        self._write(f"NPLC {int(val)}")
+        num = float(val)
+        if str(val)[0]=='0':
+            num = str(val)[1::]
+            
+        self._write(f"NPLC {num}")
     
     def NPLCQ(self):
         """Query number of power line cycles."""
@@ -423,6 +390,10 @@ class gpio_interface:
     def TRIG(self, val):
         """TRIG setting."""
         self._write(f"TRIG {int(val)}")
+    
+    def TRIG_SYN(self):
+        """TRIG SYN"""
+        self._write(f"TRIG SYN")
     
     def TGR(self, val):
         """TGR setting (trigger gate)."""
