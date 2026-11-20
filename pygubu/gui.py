@@ -806,7 +806,7 @@ class gui(guiUI):
     def digits_pressed(self):
         """Handle Digits button."""
         try:
-            val = int(self.digits_entry.get())
+            val = float(self.digits_entry.get())
             if self.gpib_inst_instance and self.gpib_inst_instance.is_connected():
                 self.gpib_inst_instance.NDIG(val)
         except:

@@ -357,7 +357,7 @@ class GPIBInterface:
     
     def NDIG(self, val):
         """Set number of digits."""
-        self._write(f"NDIG {int(val)}")
+        self._write(f"NDIG {float(val)}")
     
     def NPLC(self, val):
         """Set number of power line cycles."""
