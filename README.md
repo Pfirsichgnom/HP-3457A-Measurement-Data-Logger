@@ -33,3 +33,7 @@ Install the required packages:
 
 ```bash
 pip install -r requirements.txt
+
+### Further Info
+
+For further information on the project visit https://www.transistorundko.com/electronics_sw/python/HP3457A_MDL/index.html
