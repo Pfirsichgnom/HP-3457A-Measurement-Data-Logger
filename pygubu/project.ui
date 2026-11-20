@@ -752,6 +752,27 @@
                     </child>
                   </object>
                 </child>
+                <child>
+                  <object class="ttk.Frame" id="frame7">
+                    <property name="height">30</property>
+                    <property name="width">300</property>
+                    <layout manager="pack">
+                      <property name="fill">x</property>
+                      <property name="pady">5</property>
+                      <property name="side">top</property>
+                    </layout>
+                    <child>
+                      <object class="ttk.Button" id="button1" named="True">
+                        <property name="command" type="command" cbtype="simple">acal_pressed</property>
+                        <property name="text" translatable="yes">ACAl</property>
+                        <layout manager="pack">
+                          <property name="padx">10</property>
+                          <property name="side">left</property>
+                        </layout>
+                      </object>
+                    </child>
+                  </object>
+                </child>
               </object>
             </child>
           </object>

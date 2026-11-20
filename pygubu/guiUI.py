@@ -126,6 +126,9 @@ class guiUI:
     def digits_pressed(self):
         pass
 
+    def acal_pressed(self):
+        pass
+
     def nplc_pressed(self):
         pass
 

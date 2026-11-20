@@ -811,6 +811,11 @@ class gui(guiUI):
                 self.gpib_inst_instance.NDIG(val)
         except:
             pass
+
+    def acal_pressed(self):
+        if self.gpib_inst_instance and self.gpib_inst_instance.is_connected():
+            self.gpib_inst_instance.ACAL()
+
     
     def nplc_pressed(self):
         """Handle NPLC button."""
